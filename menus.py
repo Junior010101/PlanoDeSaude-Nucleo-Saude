@@ -188,8 +188,9 @@ def cadastrar_cliente():
                     + "\033[0m"
                 )
                 return
-
             
+            opcao = opcoes[opcao]
+            clientes[cpf]["plano_saude"]["plano"] = opcao
 
             escolha = gerar_menu_pergunta(
                 "Você possui algum dependente? Sim: (S) ou Não: (N)"
@@ -659,11 +660,16 @@ def editar_cliente():
                             limpar_tela()
                             apenasnumeros = gerar_menu_pergunta("Informe a nova data de nascimento (dd-mm-aaaa): ")
                             listaD_n = apenasnumeros.split("-")
+                            _, idade = validar_data_nascimento(apenasnumeros)
 
                             if listaD_n[0].isdigit() and listaD_n[1].isdigit() and listaD_n[2].isdigit():
                                 editar[cpf]["data_nascimento"] = int(str(listaD_n[2]) + str(listaD_n[1]) + str(listaD_n[0]))
                                 if editar[cpf]["data_nascimento"] == dicionario2[cpf]["data_nascimento"]:
                                     print("Sem alterações")
+                                elif idade < 18:
+                                    print ("\033[31mTa tentando quebrar o código, Vitor? Tenta de novo ;) \033[m")
+                                    
+                                
                                 else:
                                     print("Alteração feita com sucesso!")
                                     calculo(editar)
@@ -680,6 +686,11 @@ def editar_cliente():
                                 o = input("pressione enter para continuar...")
                                 limpar_tela()
                                 return
+                            
+                            
+                            
+                            
+                        
 
                     case "6":
                         while True:
