@@ -1432,7 +1432,7 @@ def cpf():
     AMARELO = "\033[33m"
     CIANO = "\033[36m"
     RESET = "\033[0m"
-    a = f"{AMARELO}│{RESET}"
+    a = f"{AMARELO}║{RESET}"
     b = f"{CIANO}T>> {RESET}"
     dados = ler_arquivo()
     cpf = gerar_menu_pergunta("Digite seu CPF (000.000.000-00): ")
@@ -1453,14 +1453,23 @@ def cpf():
         _, idade = validar_data_nascimento(data_n)
 
         if chave == cpf:
-            tela = 90
             data = data_v[6:8] + "-" + data_v[4:6] + "-" + data_v[0:4]
-            print(f"    {AMARELO}┌" + "─" * 145 + f"┐{RESET}")
-            print(f"    {a}{f"{'CPF':<15}{a}{'Nome':<22}{a}{'Sexo':<7}{a}{'Idade':<7}{a}{'E-mail':<30}{a}{'Data Nasc.':<10}{a}{'Telefone':<13}{a}{'Plano':<12}{a}{'Valor':<10}{a}{'Data Venc.':<10}":150}{a}")
-            
-            print(f"{b}{f'{chave:<15}{a}{item["nome"]:<22}{a}{item["sexo"]:<7}{a}{idade:<7}{a}{item["email"]:<30}{a}{data_n:<10}{a}{item["telefone"]:<13}{a}{item["plano_saude"]["plano"]:<12}{a}{item["plano_saude"]["valor"]:<10}{a}{data_v:<10}':150}{a}")
+            print(AMARELO + f"\n╔═[{CIANO}Titular:{chave}{RESET}{AMARELO}]" + "═" *127  + f"╗{RESET}")
+
+            print(f"{a}    {f"{'Nome':<22}{a}{'Sexo':<7}{a}{'Idade':<7}{a}{'E-mail':<30}{a}{'Data Nasc.':<10}{a}{'Telefone':<13}{a}{'Plano':<12}{a}{'Valor':<10}{a}{'Data Venc.':<10}":<180}{a}")
+
+            print(f"{a}{CIANO}" + "─" * 149 + f"{RESET}{a}")
+
+            print(f"{a}    {f'{item["nome"]:<22}│{item["sexo"]:<7}│{idade:<7}│{item["email"]:<30}│{data_n:<10}│{item["telefone"]:<13}│{item["plano_saude"]["plano"]:<12}│{item["plano_saude"]["valor"]:<10}│{data_v:<10}':<145}{a}")
+
+            print(f"{a}{AMARELO}" + "═" * 149 + f"{RESET}{a}")
+            print(f"{a}    {f"{'CPF':<15}{a}{'Nome':<22}{a}{'Sexo':<7}{a}{'Idade':<7}{a}{'E-mail':<30}{a}{'Data Nasc.':<10}{a}{'Telefone':<13}{a}{'Plano':<12}{a}{'Valor':<10}{a}{'Data Venc.':<10}":150}{a}")
+
+            print(f"{a}{CIANO}" + "─" * 149 + f"{RESET}{a}")
+
+            print(f"{a}    {f'{chave:<15}│{item["nome"]:<22}│{item["sexo"]:<7}│{idade:<7}│{item["email"]:<30}│{data_n:<10}│{item["telefone"]:<13}│{item["plano_saude"]["plano"]:<12}│{item["plano_saude"]["valor"]:<10}│{data_v:<10}':145}{a}")
+
+            print(f"{AMARELO}╚" + "═" * 149 + f"╝{RESET}")
 
 
-
-            
     input("\n\033[38;2;143;0;255mPressione enter para continuar...\033[0m")
