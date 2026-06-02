@@ -1,5 +1,3 @@
-from os import name, system
-
 from menus import (
     cadastrar_cliente,
     cpf,
@@ -9,15 +7,9 @@ from menus import (
     lps,
     remover,
 )
+from logica import limpar_tela
 
-
-def limpar_tela():
-    if name == "nt":
-        system("cls")
-    else:
-        system("clear")
-
-
+123
 def menu():
     AMARELO = "\033[33m"
     MAGENTA = "\033[35m"

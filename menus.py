@@ -1,12 +1,13 @@
-from logica import calculo, validar_cpf, validar_data_nascimento, vencimento
+from logica import (
+    calculo,
+    validar_cpf,
+    validar_data_nascimento,
+    vencimento,
+    limpar_tela,
+)
 from percistencia import ler_arquivo, salvar_arquivo
-from os import name, system
 
-def limpar_tela():
-    if name == "nt":
-        system("cls")
-    else:
-        system("clear")
+
 def gerar_menu_pergunta(pergunta, opcoes=None):
     AMARELO = "\033[33m"
     CIANO = "\033[36m"
@@ -37,12 +38,10 @@ def gerar_menu_pergunta(pergunta, opcoes=None):
 
 def cadastrar_cliente():
     clientes = ler_arquivo()
-
     pergunta = gerar_menu_pergunta(
         "Você deseja se cadastrar como titular ou dependente?",
         ["1 - Titular", "2 - Dependente"],
     )
-
     match pergunta:
         case "1":
             cpf = gerar_menu_pergunta(
@@ -188,7 +187,7 @@ def cadastrar_cliente():
                     + "\033[0m"
                 )
                 return
-            
+
             opcao = opcoes[opcao]
             clientes[cpf]["plano_saude"]["plano"] = opcao
 
@@ -400,6 +399,18 @@ def cadastrar_cliente():
 
                 nome_dep = gerar_menu_pergunta("Digite seu nome.")
 
+                if not nome_dep.replace(" ", "").isalpha():
+                    print(
+                        "\033[31mCaracteres invalidos, apenas permitimos o uso de caracteres de A-Z."
+                    )
+                    input(
+                        "\n\033[38;2;143;0;255m"
+                        + "Pressione enter para continuar..."
+                        + "\033[0m"
+                    )
+                    del clientes[cpf]["terceiros"][cpf_dep]
+                    continue
+
                 sexo = gerar_menu_pergunta(
                     "Qual seu sexo?",
                     ["1 - fem", "2 - masc"],
@@ -412,6 +423,7 @@ def cadastrar_cliente():
                         + "Pressione enter para continuar..."
                         + "\033[0m"
                     )
+                    del clientes[cpf]["terceiros"][cpf_dep]
                     continue
 
                 sexos = {"1": "fem", "2": "masc"}
@@ -428,6 +440,7 @@ def cadastrar_cliente():
 
                 if data_nascimento_dep is None:
                     print(info)
+                    del clientes[cpf]["terceiros"][cpf_dep]
                     continue
 
                 clientes[cpf]["terceiros"][cpf_dep]["nome"] = nome_dep
@@ -462,6 +475,7 @@ def cadastrar_cliente():
                         + "Opção de plano invalida."
                         + "\033[0m",
                     )
+                    del clientes[cpf]["terceiros"][cpf_dep]
                     continue
 
                 opcao = opcoes[opcao]
@@ -518,9 +532,20 @@ def editar_cliente():
         elif cpf in editar:
             while True:
                 limpar_tela()
-                quero_editar = gerar_menu_pergunta("Informe o número do dado que você quer editar: ",["1 - Nome",
-                "2 - Plano","3 - Sexo","4 - E-mail","5 - Data de Nasc.","6 - Telefone","7 - Nome de depen.",
-                "8 - Plano depen.","9 - Data.nasc.depen."])
+                quero_editar = gerar_menu_pergunta(
+                    "Informe o número do dado que você quer editar: ",
+                    [
+                        "1 - Nome",
+                        "2 - Plano",
+                        "3 - Sexo",
+                        "4 - E-mail",
+                        "5 - Data de Nasc.",
+                        "6 - Telefone",
+                        "7 - Nome de depen.",
+                        "8 - Plano depen.",
+                        "9 - Data.nasc.depen.",
+                    ],
+                )
 
                 match quero_editar:
                     case "1":
@@ -547,47 +572,17 @@ def editar_cliente():
                     case "2":
                         while True:
                             limpar_tela()
-                            mudarplano = gerar_menu_pergunta("Informe o novo plano:",["1- Prata","2- Ouro","3- Diamante","4- Esmeralda"])
+                            mudarplano = gerar_menu_pergunta(
+                                "Informe o novo plano:",
+                                ["1- Prata", "2- Ouro", "3- Diamante", "4- Esmeralda"],
+                            )
 
                             if mudarplano == "1":
                                 editar[cpf]["plano_saude"]["plano"] = "Prata"
-                                if editar[cpf]["plano_saude"]["plano"] == dicionario2[cpf]["plano_saude"]["plano"]:
-                                    print("Sem alterações")
-                                else:
-                                    print("Plano alterado com sucesso!")
-                                    calculo(editar)
-                                    salvar_arquivo(editar)
-                                o = input("pressione enter para continuar...")
-                                limpar_tela()
-                                return
-                            
-                            elif mudarplano == "2":
-                                editar[cpf]["plano_saude"]["plano"] = "Ouro"
-                                if editar[cpf]["plano_saude"]["plano"] == dicionario2[cpf]["plano_saude"]["plano"]:
-                                    print("Sem alterações")
-                                else:
-                                    print("Plano alterado com sucesso!")
-                                    calculo(editar)
-                                    salvar_arquivo(editar)
-                                o = input("pressione enter para continuar...")
-                                limpar_tela()
-                                return
-                            
-                            elif mudarplano == "3":
-                                editar[cpf]["plano_saude"]["plano"] = "Diamante"
-                                if editar[cpf]["plano_saude"]["plano"] == dicionario2[cpf]["plano_saude"]["plano"]:
-                                    print("Sem alterações")
-                                else:
-                                    print("Plano alterado com sucesso!")
-                                    calculo(editar)
-                                    salvar_arquivo(editar)
-                                o = input("pressione enter para continuar...")
-                                limpar_tela()
-                                return
-                            
-                            elif mudarplano == "4":
-                                editar[cpf]["plano_saude"]["plano"] = "Esmeralda"
-                                if editar[cpf]["plano_saude"]["plano"] == dicionario2[cpf]["plano_saude"]["plano"]:
+                                if (
+                                    editar[cpf]["plano_saude"]["plano"]
+                                    == dicionario2[cpf]["plano_saude"]["plano"]
+                                ):
                                     print("Sem alterações")
                                 else:
                                     print("Plano alterado com sucesso!")
@@ -597,6 +592,50 @@ def editar_cliente():
                                 limpar_tela()
                                 return
 
+                            elif mudarplano == "2":
+                                editar[cpf]["plano_saude"]["plano"] = "Ouro"
+                                if (
+                                    editar[cpf]["plano_saude"]["plano"]
+                                    == dicionario2[cpf]["plano_saude"]["plano"]
+                                ):
+                                    print("Sem alterações")
+                                else:
+                                    print("Plano alterado com sucesso!")
+                                    calculo(editar)
+                                    salvar_arquivo(editar)
+                                o = input("pressione enter para continuar...")
+                                limpar_tela()
+                                return
+
+                            elif mudarplano == "3":
+                                editar[cpf]["plano_saude"]["plano"] = "Diamante"
+                                if (
+                                    editar[cpf]["plano_saude"]["plano"]
+                                    == dicionario2[cpf]["plano_saude"]["plano"]
+                                ):
+                                    print("Sem alterações")
+                                else:
+                                    print("Plano alterado com sucesso!")
+                                    calculo(editar)
+                                    salvar_arquivo(editar)
+                                o = input("pressione enter para continuar...")
+                                limpar_tela()
+                                return
+
+                            elif mudarplano == "4":
+                                editar[cpf]["plano_saude"]["plano"] = "Esmeralda"
+                                if (
+                                    editar[cpf]["plano_saude"]["plano"]
+                                    == dicionario2[cpf]["plano_saude"]["plano"]
+                                ):
+                                    print("Sem alterações")
+                                else:
+                                    print("Plano alterado com sucesso!")
+                                    calculo(editar)
+                                    salvar_arquivo(editar)
+                                o = input("pressione enter para continuar...")
+                                limpar_tela()
+                                return
 
                             else:
                                 print("Opção Inválida!")
@@ -607,7 +646,9 @@ def editar_cliente():
                     case "3":
                         while True:
                             limpar_tela()
-                            mudarsexo = gerar_menu_pergunta("informe o sexo:",["1- Fem","2- Masc: "])
+                            mudarsexo = gerar_menu_pergunta(
+                                "informe o sexo:", ["1- Fem", "2- Masc: "]
+                            )
 
                             if mudarsexo == "1":
                                 editar[cpf]["sexo"] = "fem"
@@ -645,7 +686,9 @@ def editar_cliente():
 
                     case "4":
                         limpar_tela()
-                        editar[cpf]["email"] = gerar_menu_pergunta("Informe o novo E-mail: ")
+                        editar[cpf]["email"] = gerar_menu_pergunta(
+                            "Informe o novo E-mail: "
+                        )
                         if editar[cpf]["email"] == dicionario2[cpf]["email"]:
                             print("Sem alterações")
                         else:
@@ -658,18 +701,32 @@ def editar_cliente():
                     case "5":
                         while True:
                             limpar_tela()
-                            apenasnumeros = gerar_menu_pergunta("Informe a nova data de nascimento (dd-mm-aaaa): ")
+                            apenasnumeros = gerar_menu_pergunta(
+                                "Informe a nova data de nascimento (dd-mm-aaaa): "
+                            )
                             listaD_n = apenasnumeros.split("-")
                             _, idade = validar_data_nascimento(apenasnumeros)
 
-                            if listaD_n[0].isdigit() and listaD_n[1].isdigit() and listaD_n[2].isdigit():
-                                editar[cpf]["data_nascimento"] = int(str(listaD_n[2]) + str(listaD_n[1]) + str(listaD_n[0]))
-                                if editar[cpf]["data_nascimento"] == dicionario2[cpf]["data_nascimento"]:
+                            if (
+                                listaD_n[0].isdigit()
+                                and listaD_n[1].isdigit()
+                                and listaD_n[2].isdigit()
+                            ):
+                                editar[cpf]["data_nascimento"] = int(
+                                    str(listaD_n[2])
+                                    + str(listaD_n[1])
+                                    + str(listaD_n[0])
+                                )
+                                if (
+                                    editar[cpf]["data_nascimento"]
+                                    == dicionario2[cpf]["data_nascimento"]
+                                ):
                                     print("Sem alterações")
                                 elif idade < 18:
-                                    print ("\033[31mTa tentando quebrar o código, Vitor? Tenta de novo ;) \033[m")
-                                    
-                                
+                                    print(
+                                        "\033[31mTa tentando quebrar o código, Vitor? Tenta de novo ;) \033[m"
+                                    )
+
                                 else:
                                     print("Alteração feita com sucesso!")
                                     calculo(editar)
@@ -686,20 +743,20 @@ def editar_cliente():
                                 o = input("pressione enter para continuar...")
                                 limpar_tela()
                                 return
-                            
-                            
-                            
-                            
-                        
 
                     case "6":
                         while True:
                             limpar_tela()
-                            apenasnumeros = gerar_menu_pergunta("Informe o novo telefone: ")
+                            apenasnumeros = gerar_menu_pergunta(
+                                "Informe o novo telefone: "
+                            )
 
                             if apenasnumeros.isdigit():
                                 editar[cpf]["telefone"] = apenasnumeros
-                                if editar[cpf]["telefone"] == dicionario2[cpf]["telefone"]:
+                                if (
+                                    editar[cpf]["telefone"]
+                                    == dicionario2[cpf]["telefone"]
+                                ):
                                     print("Sem alterações")
                                 else:
                                     print("Alteração feita com sucesso!")
@@ -719,17 +776,29 @@ def editar_cliente():
                         while True:
                             limpar_tela()
                             quero_editar2 = gerar_menu_pergunta(
-                                "Informe o CPF do dependente que você quer editar (000.000.000-00): ")
-                            
-                            quero_editar2 = (quero_editar2.replace(".", "").replace("-", ""))
+                                "Informe o CPF do dependente que você quer editar (000.000.000-00): "
+                            )
 
-                            nome_com_apenas_letras = gerar_menu_pergunta("Informe o novo nome do dependente: ",)
+                            quero_editar2 = quero_editar2.replace(".", "").replace(
+                                "-", ""
+                            )
+
+                            nome_com_apenas_letras = gerar_menu_pergunta(
+                                "Informe o novo nome do dependente: ",
+                            )
                             if nome_com_apenas_letras.replace(" ", "").isalpha():
-                                editar[cpf]["terceiros"][quero_editar2]["nome"] = nome_com_apenas_letras
-                                if editar[cpf]["terceiros"][quero_editar2]["nome"] == dicionario2[cpf]["terceiros"][quero_editar2]["nome"]:
+                                editar[cpf]["terceiros"][quero_editar2][
+                                    "nome"
+                                ] = nome_com_apenas_letras
+                                if (
+                                    editar[cpf]["terceiros"][quero_editar2]["nome"]
+                                    == dicionario2[cpf]["terceiros"][quero_editar2][
+                                        "nome"
+                                    ]
+                                ):
                                     print("Sem alterações")
                                 else:
-                                    print("Alteração feita com sucesso!")    
+                                    print("Alteração feita com sucesso!")
                                     salvar_arquivo(editar)
                                 o = input("pressione enter para continuar...")
                                 limpar_tela()
@@ -744,51 +813,28 @@ def editar_cliente():
                         while True:
                             limpar_tela()
                             quero_editar2 = gerar_menu_pergunta(
-                                "Informe o CPF do dependente que você quer editar (000.000.000-00): ")
-                            
-                            quero_editar2 = (quero_editar2.replace(".", "").replace("-", ""))
+                                "Informe o CPF do dependente que você quer editar (000.000.000-00): "
+                            )
 
-                            mudarplano = gerar_menu_pergunta("Informe o novo plano:",["1- Prata","2- Ouro","3- Diamante","4- Esmeralda"])
+                            quero_editar2 = quero_editar2.replace(".", "").replace(
+                                "-", ""
+                            )
+
+                            mudarplano = gerar_menu_pergunta(
+                                "Informe o novo plano:",
+                                ["1- Prata", "2- Ouro", "3- Diamante", "4- Esmeralda"],
+                            )
 
                             if mudarplano == "1":
-                                editar[cpf]["terceiros"][quero_editar2]["plano"] = "Prata"
-                                if editar[cpf]["terceiros"][quero_editar2]["plano"] == dicionario2[cpf]["terceiros"][quero_editar2]["plano"]:
-                                    print("Sem alterações")
-                                else:
-                                    print("Alteração feita com sucesso!")
-                                    calculo(editar)
-                                    salvar_arquivo(editar)
-                                o = input("pressione enter para continuar...")
-                                limpar_tela()
-                                return
-                            
-                            elif mudarplano == "2":
-                                editar[cpf]["terceiros"][quero_editar2]["plano"] = "Ouro"
-                                if editar[cpf]["terceiros"][quero_editar2]["plano"] == dicionario2[cpf]["terceiros"][quero_editar2]["plano"]:
-                                    print("Sem alterações")
-                                else:
-                                    print("Alteração feita com sucesso!")
-                                    calculo(editar)
-                                    salvar_arquivo(editar)
-                                o = input("pressione enter para continuar...")
-                                limpar_tela()
-                                return
-                            
-                            elif mudarplano == "3":
-                                editar[cpf]["terceiros"][quero_editar2]["plano"] = "Diamante"
-                                if editar[cpf]["terceiros"][quero_editar2]["plano"] == dicionario2[cpf]["terceiros"][quero_editar2]["plano"]:
-                                    print("Sem alterações")
-                                else:
-                                    print("Alteração feita com sucesso!")
-                                    calculo(editar)
-                                    salvar_arquivo(editar)
-                                o = input("pressione enter para continuar...")
-                                limpar_tela()
-                                return
-                            
-                            elif mudarplano == "4":
-                                editar[cpf]["terceiros"][quero_editar2]["plano"] = "Esmeralda"
-                                if editar[cpf]["terceiros"][quero_editar2]["plano"] == dicionario2[cpf]["terceiros"][quero_editar2]["plano"]:
+                                editar[cpf]["terceiros"][quero_editar2][
+                                    "plano"
+                                ] = "Prata"
+                                if (
+                                    editar[cpf]["terceiros"][quero_editar2]["plano"]
+                                    == dicionario2[cpf]["terceiros"][quero_editar2][
+                                        "plano"
+                                    ]
+                                ):
                                     print("Sem alterações")
                                 else:
                                     print("Alteração feita com sucesso!")
@@ -798,26 +844,87 @@ def editar_cliente():
                                 limpar_tela()
                                 return
 
+                            elif mudarplano == "2":
+                                editar[cpf]["terceiros"][quero_editar2][
+                                    "plano"
+                                ] = "Ouro"
+                                if (
+                                    editar[cpf]["terceiros"][quero_editar2]["plano"]
+                                    == dicionario2[cpf]["terceiros"][quero_editar2][
+                                        "plano"
+                                    ]
+                                ):
+                                    print("Sem alterações")
+                                else:
+                                    print("Alteração feita com sucesso!")
+                                    calculo(editar)
+                                    salvar_arquivo(editar)
+                                o = input("pressione enter para continuar...")
+                                limpar_tela()
+                                return
+
+                            elif mudarplano == "3":
+                                editar[cpf]["terceiros"][quero_editar2][
+                                    "plano"
+                                ] = "Diamante"
+                                if (
+                                    editar[cpf]["terceiros"][quero_editar2]["plano"]
+                                    == dicionario2[cpf]["terceiros"][quero_editar2][
+                                        "plano"
+                                    ]
+                                ):
+                                    print("Sem alterações")
+                                else:
+                                    print("Alteração feita com sucesso!")
+                                    calculo(editar)
+                                    salvar_arquivo(editar)
+                                o = input("pressione enter para continuar...")
+                                limpar_tela()
+                                return
+
+                            elif mudarplano == "4":
+                                editar[cpf]["terceiros"][quero_editar2][
+                                    "plano"
+                                ] = "Esmeralda"
+                                if (
+                                    editar[cpf]["terceiros"][quero_editar2]["plano"]
+                                    == dicionario2[cpf]["terceiros"][quero_editar2][
+                                        "plano"
+                                    ]
+                                ):
+                                    print("Sem alterações")
+                                else:
+                                    print("Alteração feita com sucesso!")
+                                    calculo(editar)
+                                    salvar_arquivo(editar)
+                                o = input("pressione enter para continuar...")
+                                limpar_tela()
+                                return
 
                             else:
                                 print("Opção Inválida!")
                                 o = input("pressione enter para continuar...")
                                 limpar_tela()
                                 return
-                            
 
                     case "9":
                         while True:
                             limpar_tela()
 
                             quero_editar2 = gerar_menu_pergunta(
-                                "Informe o CPF do dependente que você quer editar: ")
-                            
-                            quero_editar2 = (quero_editar2.replace(".", "").replace("-", ""))
-                            apenasnumeros = gerar_menu_pergunta(
-                                "Informe a nova data de nascimento (dd-mm-aaaa): ")
+                                "Informe o CPF do dependente que você quer editar: "
+                            )
 
-                            data_nascimento, erro = validar_data_nascimento(apenasnumeros)
+                            quero_editar2 = quero_editar2.replace(".", "").replace(
+                                "-", ""
+                            )
+                            apenasnumeros = gerar_menu_pergunta(
+                                "Informe a nova data de nascimento (dd-mm-aaaa): "
+                            )
+
+                            data_nascimento, erro = validar_data_nascimento(
+                                apenasnumeros
+                            )
 
                             if data_nascimento is None:
                                 print(erro)
@@ -825,8 +932,17 @@ def editar_cliente():
                                 limpar_tela()
                                 return
                             else:
-                                editar[cpf]["terceiros"][quero_editar2]["data_nascimento"] = data_nascimento
-                                if editar[cpf]["terceiros"][quero_editar2]["data_nascimento"] == dicionario2[cpf]["terceiros"][quero_editar2]["data_nascimento"]:
+                                editar[cpf]["terceiros"][quero_editar2][
+                                    "data_nascimento"
+                                ] = data_nascimento
+                                if (
+                                    editar[cpf]["terceiros"][quero_editar2][
+                                        "data_nascimento"
+                                    ]
+                                    == dicionario2[cpf]["terceiros"][quero_editar2][
+                                        "data_nascimento"
+                                    ]
+                                ):
                                     print("Sem alterações")
                                 else:
                                     print("Alteração feita com sucesso!")
@@ -845,6 +961,8 @@ def editar_cliente():
             o = input("pressione enter para continuar...")
             limpar_tela()
             return
+
+
 # Marcos
 def remover():
     dados = ler_arquivo()
@@ -1230,7 +1348,9 @@ def listagem_geral():
             + "\033[0m"
         )
 
-        for cpf_dep, dep in item["terceiros"].items():
+        for cpf_dep, dep in item[
+            "terceiros"
+        ].items():  # -=-=-==-=-=-=------------------------------------------------------------------------
             data_dep = str(dep["data_nascimento"])
             data_dep = f"{data_dep[6:8] + "-" + data_dep[4:6] + "-" + data_dep[0:4]}"
             _, idade_dep = validar_data_nascimento(data_dep)
@@ -1310,7 +1430,6 @@ def data_por_vecimento():
 
 def cpf():
     dados = ler_arquivo()
-
     cpf = gerar_menu_pergunta("Digite seu CPF (000.000.000-00): ")
     cpf, err = validar_cpf(cpf)
     if cpf is None:
@@ -1321,13 +1440,13 @@ def cpf():
         print("Não tem nada aqui não!!")
         input("\n\033[38;2;143;0;255mPressione enter para continuar...\033[0m")
         return
-
     print(
         "\033[30;47m"
         + f"{"Tipos":<12}│ "
+        + f"{"CPF":<16}│"
         + f"{"Nome":<20}│ "
         + f"{"Sexo":<6}│ "
-        + f"{"idade":<6}│ "
+        + f"{"idade":<3}│ "
         + f"{"E-mail":<31}│ "
         + f"{"Data nasc.":<13}│ "
         + f"{"Telefone":<12}│ "
@@ -1343,43 +1462,50 @@ def cpf():
         data_n = str(item["data_nascimento"])  # 2000 10 10 data_n[6:8]
         data_n = f"{data_n[6:8] + "-" + data_n[4:6] + "-" + data_n[0:4]}"
         _, idade = validar_data_nascimento(data_n)
-        titular = "Titular" if item["titular"] else "Dependente"
 
         if chave == cpf:
-            print(
+            tela = 90
+            data = data_v[6:8] + "-" + data_v[4:6] + "-" + data_v[0:4]
+                  
+            if len(chave) + len(item['nome']) + len(item['sexo']) + len(str(idade)) + len(item['email']) + len(data_n)+ len(item['telefone']) + len(item['plano_saude']['plano']) + len(str(item['plano_saude']['valor'])) + len(data) <= tela:
+                print(
                 "\033[30;47m"
-                + f"{'titular':<12}│ "
-                + f"{item['nome']:<19} │ "
+                + f"{'titular':<7}│ "
+                + F"{chave:<11}│"
+                + f"{item['nome']:<20} │ "
                 + f"{item['sexo']:<5} │ "
                 + f"{str(idade):<5} │ "
                 + f"{item['email']:<30} │ "
                 + f"{data_n:<12} │ "
                 + f"{item['telefone']:<11} │ "
-                + f"{item['plano_saude']['plano']:<10} │ "
-                + f"{item['plano_saude']['valor']:<10.2f} │ "
-                + f"{data_v[6:8] + "-" + data_v[4:6] + "-" + data_v[0:4]:<11}"
+                + f"{item['plano_saude']['plano']:<9} │ "
+                + f"{item['plano_saude']['valor']:<5.2f} │ "
+                + f"{data:<10}"
                 + "\033[30;0m"
-            )
-            for cpf_dep, dep in item["terceiros"].items():
-                data_dep = str(dep["data_nascimento"])
-                data_dep = f"{data_dep[6:8]}-{data_dep[4:6]}-{data_dep[0:4]}"
-                _, idade_dep = validar_data_nascimento(data_dep)
+                )
+                if len(item["terceiros"]) > 0:
+                    for cpf_dep, dep in item["terceiros"].items():
+                        data_dep = str(dep["data_nascimento"])
+                        data_dep = f"{data_dep[6:8]}-{data_dep[4:6]}-{data_dep[0:4]}"
+                        _, idade_dep = validar_data_nascimento(data_dep)
+                        
+                        print("\033[30;47m"+ f"{""+ f"{"CPF":<16}│"+ f"{"Nome":<20}│ "+ f"{"Sexo":<6}│ "+ f"{"idade":<3}│ "+ f"{"E-mail":<31}│ "+ f"{"Data nasc.":<13}│ "+ f"{"Telefone":<12}│ "+ f"{"Plano":<11}│ "+ f"{"Valor":<11}│ "+ f"{"Data venc.":<11}"+ "\033[0m")
+                        print("\033[30;47m" + "-" * 151 + "\033[0m")
+                        print(
+                            "\033[30;47m"
+                            + f"{'dep.':<7}│"
+                            + f"{cpf_dep:<11}│"
+                            + f"{dep['nome']:<20} │ "
+                            + f"{dep['sexo']:<5} │ "
+                            + f"{str(idade_dep):<5} │ "
+                            + f"{'----':<30} │ "
+                            + f"{data_dep:<12} │ "
+                            + f"{'----':<11} │ "
+                            + f"{dep['plano']:<10} │ "
+                            + f"{item['plano_saude']['valor']:<10.2f} │ "
+                            + f"{data_v[6:8] + '-' + data_v[4:6] + '-' + data_v[0:4]:<11}"
+                            + "\033[30;0m"
+                        )
 
-            print(
-                "\033[30;47m"
-                + f"{'Dependente':<12}│ "
-                + f"{dep['nome']:<19} │ "
-                + f"{dep['sexo']:<5} │ "
-                + f"{str(idade_dep):<5} │ "
-                + f"{'----':<30} │ "
-                + f"{data_dep:<12} │ "
-                + f"{'----':<11} │ "
-                + f"{dep['plano']:<10} │ "
-                + f"{item['plano_saude']['valor']:<10.2f} │ "
-                + f"{data_v[6:8] + '-' + data_v[4:6] + '-' + data_v[0:4]:<11}"
-                + "\033[30;0m"
-            )
-
-            print("\033[30;47m" + "-" * 151 + "\033[0m")
-
+                    print("\033[30;47m" + "-" * 151 + "\033[0m")
     input("\n\033[38;2;143;0;255mPressione enter para continuar...\033[0m")
