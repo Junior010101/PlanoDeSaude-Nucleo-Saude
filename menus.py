@@ -100,6 +100,14 @@ def cadastrar_cliente():
                     + "\033[0m"
                 )
                 return
+            elif not nome.replace(" ", "").isalpha():
+                print("\033[31mCaractere inválido, escreva apenas caracteres de a-z!")
+                input(
+                    "\n\033[38;2;143;0;255m"
+                    + "Pressione enter para continuar..."
+                    + "\033[0m"
+                )
+                return
             clientes[cpf]["nome"] = nome
 
             sexo = gerar_menu_pergunta(
