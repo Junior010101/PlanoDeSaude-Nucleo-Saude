@@ -1095,30 +1095,27 @@ def lps():
                     _, idade_dep = validar_data_nascimento(data_dep)
 
                     valor_dep = (
-                    400
-                    if dep["plano"] == "Diamante"
-                    else (
-                        300
-                        if dep["plano"] == "Ouro"
+                        400 if dep["plano"] == "Diamante"
                         else (
-                            200
-                            if dep["plano"] == "Prata"
+                            300 if dep["plano"] == "Ouro"
                             else (
-                                500
-                                if dep["plano"] == "Esmeralda"
-                                else 0
+                                200 if dep["plano"] == "Prata"
+                                else (
+                                    500 if dep["plano"] == "Esmeralda"
+                                    else 0
+                                )
                             )
                         )
                     )
-                )
+
                     
-                print(f"{a}{AMARELO}" + "═" * 149 + f"{RESET}{a}")
-                print(f"{a}    {f"{'CPF':<15}{a}{'Nome':<22}{a}{'Sexo':<7}{a}{'Idade':<7}{a}{'E-mail':<30}{a}{'Data Nasc.':<10}{a}{'Telefone':<13}{a}{'Plano':<12}{a}{'Valor':<10}{a}{'Data Venc.':<10}":150}{a}")
+                    print(f"{a}{AMARELO}" + "═" * 149 + f"{RESET}{a}")
+                    print(f"{a}    {f"{'CPF':<15}{a}{'Nome':<22}{a}{'Sexo':<7}{a}{'Idade':<7}{a}{'E-mail':<30}{a}{'Data Nasc.':<10}{a}{'Telefone':<13}{a}{'Plano':<12}{a}{'Valor':<10}{a}{'Data Venc.':<10}":150}{a}")
 
-                print(f"{a}{CIANO}" + "─" * 149 + f"{RESET}{a}")
+                    print(f"{a}{CIANO}" + "─" * 149 + f"{RESET}{a}")
 
-                print(f"{a}    {f'{cpf_dep:<15}│{dep["nome"]:<22}│{dep["sexo"]:<7}│{idade_dep:<7}│{"N/A":<30}│{data_dep:<10}│{"N/A":<13}│{dep["plano"]:<12}│{valor_dep:<10}│{data:<10}':145}{a}")
-                print(f"{AMARELO}╚" + "═" * 149 + f"╝{RESET}")
+                    print(f"{a}    {f'{cpf_dep:<15}│{dep["nome"]:<22}│{dep["sexo"]:<7}│{idade_dep:<7}│{"N/A":<30}│{data_dep:<10}│{"N/A":<13}│{dep["plano"]:<12}│{valor_dep:<10}│{data:<10}':145}{a}")
+                    print(f"{AMARELO}╚" + "═" * 149 + f"╝{RESET}")
                     
         input("\n\033[38;2;143;0;255mPressione enter para continuar...\033[0m")
 
@@ -1168,31 +1165,28 @@ def lps():
                     data_dep = str(dep["data_nascimento"])
                     data_dep = f"{data_dep[6:8] + "-" + data_dep[4:6] + "-" + data_dep[0:4]}"
                     _, idade_dep = validar_data_nascimento(data_dep)
+                    
                     valor_dep = (
-                    400
-                    if dep["plano"] == "Diamante"
-                    else (
-                        300
-                        if dep["plano"] == "Ouro"
+                        400 if dep["plano"] == "Diamante"
                         else (
-                            200
-                            if dep["plano"] == "Prata"
+                            300 if dep["plano"] == "Ouro"
                             else (
-                                500
-                                if dep["plano"] == "Esmeralda"
-                                else 0
+                                200 if dep["plano"] == "Prata"
+                                else (
+                                    500 if dep["plano"] == "Esmeralda"
+                                    else 0
+                                )
                             )
                         )
                     )
-                )
                 
-                print(f"{a}{AMARELO}" + "═" * 149 + f"{RESET}{a}")
-                print(f"{a}    {f"{'CPF':<15}{a}{'Nome':<22}{a}{'Sexo':<7}{a}{'Idade':<7}{a}{'E-mail':<30}{a}{'Data Nasc.':<10}{a}{'Telefone':<13}{a}{'Plano':<12}{a}{'Valor':<10}{a}{'Data Venc.':<10}":150}{a}")
+                    print(f"{a}{AMARELO}" + "═" * 149 + f"{RESET}{a}")
+                    print(f"{a}    {f"{'CPF':<15}{a}{'Nome':<22}{a}{'Sexo':<7}{a}{'Idade':<7}{a}{'E-mail':<30}{a}{'Data Nasc.':<10}{a}{'Telefone':<13}{a}{'Plano':<12}{a}{'Valor':<10}{a}{'Data Venc.':<10}":150}{a}")
 
-                print(f"{a}{CIANO}" + "─" * 149 + f"{RESET}{a}")
+                    print(f"{a}{CIANO}" + "─" * 149 + f"{RESET}{a}")
 
-                print(f"{a}    {f'{cpf_dep:<15}│{dep["nome"]:<22}│{dep["sexo"]:<7}│{idade_dep:<7}│{"N/A":<30}│{data_dep:<10}│{"N/A":<13}│{dep["plano"]:<12}│{valor_dep:<10}│{data:<10}':145}{a}")
-                print(f"{AMARELO}╚" + "═" * 149 + f"╝{RESET}")
+                    print(f"{a}    {f'{cpf_dep:<15}│{dep["nome"]:<22}│{dep["sexo"]:<7}│{idade_dep:<7}│{"N/A":<30}│{data_dep:<10}│{"N/A":<13}│{dep["plano"]:<12}│{valor_dep:<10}│{data:<10}':145}{a}")
+                    print(f"{AMARELO}╚" + "═" * 149 + f"╝{RESET}")
 
         input(
             "\n"
@@ -1249,31 +1243,27 @@ def lps():
                     _, idade_dep = validar_data_nascimento(data_dep)
 
                     valor_dep = (
-                    400
-                    if dep["plano"] == "Diamante"
-                    else (
-                        300
-                        if dep["plano"] == "Ouro"
+                        400 if dep["plano"] == "Diamante"
                         else (
-                            200
-                            if dep["plano"] == "Prata"
+                            300 if dep["plano"] == "Ouro"
                             else (
-                                500
-                                if dep["plano"] == "Esmeralda"
-                                else 0
+                                200 if dep["plano"] == "Prata"
+                                else (
+                                    500 if dep["plano"] == "Esmeralda"
+                                    else 0
+                                )
                             )
                         )
                     )
-                )
                 
-                print(f"{a}{AMARELO}" + "═" * 149 + f"{RESET}{a}")
-                print(f"{a}    {f"{'CPF':<15}{a}{'Nome':<22}{a}{'Sexo':<7}{a}{'Idade':<7}{a}{'E-mail':<30}{a}{'Data Nasc.':<10}{a}{'Telefone':<13}{a}{'Plano':<12}{a}{'Valor':<10}{a}{'Data Venc.':<10}":150}{a}")
+                    print(f"{a}{AMARELO}" + "═" * 149 + f"{RESET}{a}")
+                    print(f"{a}    {f"{'CPF':<15}{a}{'Nome':<22}{a}{'Sexo':<7}{a}{'Idade':<7}{a}{'E-mail':<30}{a}{'Data Nasc.':<10}{a}{'Telefone':<13}{a}{'Plano':<12}{a}{'Valor':<10}{a}{'Data Venc.':<10}":150}{a}")
 
-                print(f"{a}{CIANO}" + "─" * 149 + f"{RESET}{a}")
+                    print(f"{a}{CIANO}" + "─" * 149 + f"{RESET}{a}")
 
-                print(f"{a}    {f'{cpf_dep:<15}│{dep["nome"]:<22}│{dep["sexo"]:<7}│{idade_dep:<7}│{"N/A":<30}│{data_dep:<10}│{"N/A":<13}│{dep["plano"]:<12}│{valor_dep:<10}│{data:<10}':145}{a}")
-                print(f"{a}{AMARELO}╚" + "═" * 149 + f"╝{RESET}{a}")
-                
+                    print(f"{a}    {f'{cpf_dep:<15}│{dep["nome"]:<22}│{dep["sexo"]:<7}│{idade_dep:<7}│{"N/A":<30}│{data_dep:<10}│{"N/A":<13}│{dep["plano"]:<12}│{valor_dep:<10}│{data:<10}':145}{a}")
+                    print(f"{a}{AMARELO}╚" + "═" * 149 + f"╝{RESET}{a}")
+                    
         input("\n\033[38;2;143;0;255mPressione enter para continuar...\033[0m")
 
     elif esc == 4:
@@ -1296,8 +1286,7 @@ def lps():
             )
             return
 
-       
-        
+          
         print("\033[30;47m" + "-" * 145 + "\033[0m")
 
         for chave, item in dados.items():
@@ -1326,30 +1315,26 @@ def lps():
                     _, idade_dep = validar_data_nascimento(data_dep)
 
                     valor_dep = (
-                    400
-                    if dep["plano"] == "Diamante"
-                    else (
-                        300
-                        if dep["plano"] == "Ouro"
+                        400 if dep["plano"] == "Diamante"
                         else (
-                            200
-                            if dep["plano"] == "Prata"
+                            300 if dep["plano"] == "Ouro"
                             else (
-                                500
-                                if dep["plano"] == "Esmeralda"
-                                else 0
+                                200 if dep["plano"] == "Prata"
+                                else (
+                                    500 if dep["plano"] == "Esmeralda"
+                                    else 0
+                                )
                             )
                         )
                     )
-                )
                 
-                print(f"{a}{AMARELO}" + "═" * 149 + f"{RESET}{a}")
-                print(f"{a}    {f"{'CPF':<15}{a}{'Nome':<22}{a}{'Sexo':<7}{a}{'Idade':<7}{a}{'E-mail':<30}{a}{'Data Nasc.':<10}{a}{'Telefone':<13}{a}{'Plano':<12}{a}{'Valor':<10}{a}{'Data Venc.':<10}":150}{a}")
+                    print(f"{a}{AMARELO}" + "═" * 149 + f"{RESET}{a}")
+                    print(f"{a}    {f"{'CPF':<15}{a}{'Nome':<22}{a}{'Sexo':<7}{a}{'Idade':<7}{a}{'E-mail':<30}{a}{'Data Nasc.':<10}{a}{'Telefone':<13}{a}{'Plano':<12}{a}{'Valor':<10}{a}{'Data Venc.':<10}":150}{a}")
 
-                print(f"{a}{CIANO}" + "─" * 149 + f"{RESET}{a}")
+                    print(f"{a}{CIANO}" + "─" * 149 + f"{RESET}{a}")
 
-                print(f"{a}    {f'{cpf_dep:<15}│{dep["nome"]:<22}│{dep["sexo"]:<7}│{idade_dep:<7}│{"N/A":<30}│{data_dep:<10}│{"N/A":<13}│{dep["plano"]:<12}│{valor_dep:<10}│{data:<10}':145}{a}")
-                print(f"{AMARELO}╚" + "═" * 149 + f"╝{RESET}")
+                    print(f"{a}    {f'{cpf_dep:<15}│{dep["nome"]:<22}│{dep["sexo"]:<7}│{idade_dep:<7}│{"N/A":<30}│{data_dep:<10}│{"N/A":<13}│{dep["plano"]:<12}│{valor_dep:<10}│{data:<10}':145}{a}")
+                    print(f"{AMARELO}╚" + "═" * 149 + f"╝{RESET}")
                 
         input("\n\033[38;2;143;0;255mPressione enter para continuar...\033[0m")
 
