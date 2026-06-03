@@ -3,10 +3,9 @@ from datetime import datetime
 from platform import system
 from subprocess import run
 
-
 def limpar_tela():
-    if system == "Windows":
-        run("cls")
+    if system() == "Windows":
+        run("cls", shell=True)
     else:
         run("clear")
 
@@ -106,27 +105,12 @@ def calculo(dados):
 
         acrec1 = (
             (plano * 0.3)
-            if items["sexo"] == "fem" and (idade_atual >= 13) and (idade_atual <= 35)
-            else 0
-        )
+            if items["sexo"] == "fem" and (idade_atual >= 13) and (idade_atual <= 35)else 0)
         acrec2 = 0
-
         if len(items["terceiros"]) > 0:
             for _, item in items["terceiros"].items():
-                planod = (
-                    400
-                    if item["plano"] == "Diamante"
-                    else (
-                        300
-                        if item["plano"] == "Ouro"
-                        else (
-                            200
-                            if item["plano"] == "Prata"
-                            else 500 if item["plano"] == "Esmeralda" else None
-                        )
-                    )
-                )
-                acrec2 = planod * 0.20
+                planod = (400 if item["plano"] == "Diamante"else (300 if item["plano"] == "Ouro"else (200 if item["plano"] == "Prata"else 500 if item["plano"] == "Esmeralda" else None)))
+                acrec2 += planod * 0.20
         acrec3 = (plano * 0.3) if idade_atual < 13 else 0
         acrec4 = (plano * 0.4) if idade_atual >= 60 else 0
 
