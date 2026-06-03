@@ -211,7 +211,7 @@ def cadastrar_cliente():
                         + '(000.000.000-00) ou Digite "sair" para fechar o processo.'
                     )
                     if cpf_dep.lower() == "sair":
-                        return
+                        break
 
                     cpf_dep, mensagem = validar_cpf(cpf_dep)
 
@@ -370,7 +370,7 @@ def cadastrar_cliente():
                     + 'ou Digite "sair" para fechar o processo.'
                 )
                 if cpf_dep.lower() == "sair":
-                    return
+                    break
 
                 cpf_dep, mensagem = validar_cpf(cpf_dep)
 
@@ -1084,55 +1084,24 @@ def lps():
             data = data_v
 
             if item["plano_saude"]["plano"] == "Diamante":
-                print(
-                    AMARELO
-                    + f"\n╔═[{CIANO}Titular:{chave}{RESET}{AMARELO}]"
-                    + "═" * 127
-                    + f"╗{RESET}"
-                )
+                print(AMARELO + f"\n╔═[{CIANO}Titular:{RESET}{AMARELO}]" + "═" *138  + f"╗"+"\033[0m")
 
-                print(
-                    f"{a}    {f"{'Nome':<22}{a}{'Sexo':<7}{a}{'Idade':<7}{a}{'E-mail':<30}{a}{'Data Nasc.':<10}{a}{'Telefone':<13}{a}{'Plano':<12}{a}{'Valor':<10}{a}{'Data Venc.':<10}":<180}{a}"
-                )
+                print(f"{a}    {f'{"CPF":<15}{a}{'Nome':<22}{a}{'Sexo':<7}{a}{'Idade':<7}{a}{'E-mail':<30}{a}{'Data Nasc.':<10}{a}{'Telefone':<13}{a}{'Plano':<12}{a}{'Valor':<10}{a}{'Data Venc.':<10}':<145}{a}")
 
-                print(f"{a}{CIANO}" + "─" * 149 + f"{RESET}{a}")
+                print(f"{a}{AMARELO}" + "─" *149 + f"\033[0m{a}")
 
-                print(
-                    f"{a}    {f'{item["nome"]:<22}│{item["sexo"]:<7}│{idade:<7}│{item["email"]:<30}│{data_n:<10}│{item["telefone"]:<13}│{item["plano_saude"]["plano"]:<12}│{item["plano_saude"]["valor"]:<10}│{data:<10}':<145}{a}"
-                )
-
-                for cpf_dep, dep in item["terceiros"].items():
-                    data_dep = str(dep["data_nascimento"])
-                    data_dep = (
-                        f"{data_dep[6:8] + "-" + data_dep[4:6] + "-" + data_dep[0:4]}"
-                    )
-                    _, idade_dep = validar_data_nascimento(data_dep)
-
-                    valor_dep = (
-                        400
-                        if dep["plano"] == "Diamante"
-                        else (
-                            300
-                            if dep["plano"] == "Ouro"
-                            else (
-                                200
-                                if dep["plano"] == "Prata"
-                                else (500 if dep["plano"] == "Esmeralda" else 0)
-                            )
-                        )
-                    )
-
-                    print(f"{a}{AMARELO}" + "═" * 149 + f"{RESET}{a}")
-                    print(
-                        f"{a}    {f"{'CPF':<15}{a}{'Nome':<22}{a}{'Sexo':<7}{a}{'Idade':<7}{a}{'E-mail':<30}{a}{'Data Nasc.':<10}{a}{'Telefone':<13}{a}{'Plano':<12}{a}{'Valor':<10}{a}{'Data Venc.':<10}":150}{a}"
-                    )
-
-                    print(f"{a}{CIANO}" + "─" * 149 + f"{RESET}{a}")
-
-                    print(
-                        f"{a}    {f'{cpf_dep:<15}│{dep["nome"]:<22}│{dep["sexo"]:<7}│{idade_dep:<7}│{"N/A":<30}│{data_dep:<10}│{"N/A":<13}│{dep["plano"]:<12}│{valor_dep:<10}│{data:<10}':145}{a}"
-                    )
-                    print(f"{AMARELO}╚" + "═" * 149 + f"╝{RESET}")
+                print(f"{a}    {f'{chave:<15}{a}{item["nome"]:<22}│{item["sexo"]:<7}│{idade:<7}│{item["email"]:<30}│{data_n:<10}│{item["telefone"]:<13}│{item["plano_saude"]["plano"]:<12}│{item["plano_saude"]["valor"]:<10}│{data:<10}':<145}{a}")
+                if len(item["terceiros"])>0:
+                    print(AMARELO+f"╔═[{CIANO}Dependentes:{RESET}{AMARELO}]" + "═" *134  + f"╗"+"\033[0m")
+                    print(f"{a}    {f'{'CPF':<15}{a}{'Nome':<30}{a}{'Sexo':<10}{a}{'Idade':<10}{a}{'Data Nasc.':<13}{a}{'Plano':<15}{a}{'Data Venc.':<24}':<145}"+" "*22+f"{a}")
+                    
+                    print(f"{a}{AMARELO}" + "─" *149 + f"{RESET}{a}")
+                    for cpf_dep,dep in item["terceiros"].items():
+                        data_dep = str(dep["data_nascimento"])
+                        data_dep = f"{data_dep[6:8] + "-" + data_dep[4:6] + "-" + data_dep[0:4]}"
+                        _, idade_dep = validar_data_nascimento(data_dep)
+                        print(f"{a}    {f'{cpf_dep:<15}│{dep["nome"]:<30}│{dep["sexo"]:<10}│{idade_dep:<10}│{data_dep:<13}│{item["plano_saude"]["plano"]:<15}│{data_v:<24}':<145}{a}")
+                print(f"{AMARELO}╚" + "═" * 149 + f"╝{RESET}")
 
         input("\n\033[38;2;143;0;255mPressione enter para continuar...\033[0m")
 
@@ -1166,57 +1135,24 @@ def lps():
             data = data_v
 
             if item["plano_saude"]["plano"] == "Ouro":
-                print(
-                    AMARELO
-                    + f"\n╔═[{CIANO}Titular:{chave}{RESET}{AMARELO}]"
-                    + "═" * 127
-                    + f"╗{RESET}"
-                )
+                print(AMARELO + f"\n╔═[{CIANO}Titular:{RESET}{AMARELO}]" + "═" *138  + f"╗"+"\033[0m")
 
-                print(
-                    f"{a}    {f"{'Nome':<22}{a}{'Sexo':<7}{a}{'Idade':<7}{a}{'E-mail':<30}{a}{'Data Nasc.':<10}{a}{'Telefone':<13}{a}{'Plano':<12}{a}{'Valor':<10}{a}{'Data Venc.':<10}":<180}{a}"
-                )
+                print(f"{a}    {f'{"CPF":<15}{a}{'Nome':<22}{a}{'Sexo':<7}{a}{'Idade':<7}{a}{'E-mail':<30}{a}{'Data Nasc.':<10}{a}{'Telefone':<13}{a}{'Plano':<12}{a}{'Valor':<10}{a}{'Data Venc.':<10}':<145}{a}")
 
-                print(f"{a}{CIANO}" + "─" * 149 + f"{RESET}{a}")
+                print(f"{a}{AMARELO}" + "─" *149 + f"\033[0m{a}")
 
-                print(
-                    f"{a}    {f'{item["nome"]:<22}│{item["sexo"]:<7}│{idade:<7}│{item["email"]:<30}│{data_n:<10}│{item["telefone"]:<13}│{item["plano_saude"]["plano"]:<12}│{item["plano_saude"]["valor"]:<10}│{data:<10}':<145}{a}"
-                )
-
-                for cpf_dep, dep in item[
-                    "terceiros"
-                ].items():  # -=-=-==-=-=-=------------------------------------------------------------------------
-                    data_dep = str(dep["data_nascimento"])
-                    data_dep = (
-                        f"{data_dep[6:8] + "-" + data_dep[4:6] + "-" + data_dep[0:4]}"
-                    )
-                    _, idade_dep = validar_data_nascimento(data_dep)
-
-                    valor_dep = (
-                        400
-                        if dep["plano"] == "Diamante"
-                        else (
-                            300
-                            if dep["plano"] == "Ouro"
-                            else (
-                                200
-                                if dep["plano"] == "Prata"
-                                else (500 if dep["plano"] == "Esmeralda" else 0)
-                            )
-                        )
-                    )
-
-                    print(f"{a}{AMARELO}" + "═" * 149 + f"{RESET}{a}")
-                    print(
-                        f"{a}    {f"{'CPF':<15}{a}{'Nome':<22}{a}{'Sexo':<7}{a}{'Idade':<7}{a}{'E-mail':<30}{a}{'Data Nasc.':<10}{a}{'Telefone':<13}{a}{'Plano':<12}{a}{'Valor':<10}{a}{'Data Venc.':<10}":150}{a}"
-                    )
-
-                    print(f"{a}{CIANO}" + "─" * 149 + f"{RESET}{a}")
-
-                    print(
-                        f"{a}    {f'{cpf_dep:<15}│{dep["nome"]:<22}│{dep["sexo"]:<7}│{idade_dep:<7}│{"N/A":<30}│{data_dep:<10}│{"N/A":<13}│{dep["plano"]:<12}│{valor_dep:<10}│{data:<10}':145}{a}"
-                    )
-                    print(f"{AMARELO}╚" + "═" * 149 + f"╝{RESET}")
+                print(f"{a}    {f'{chave:<15}{a}{item["nome"]:<22}│{item["sexo"]:<7}│{idade:<7}│{item["email"]:<30}│{data_n:<10}│{item["telefone"]:<13}│{item["plano_saude"]["plano"]:<12}│{item["plano_saude"]["valor"]:<10}│{data:<10}':<145}{a}")
+                if len(item["terceiros"])>0:
+                    print(AMARELO+f"╔═[{CIANO}Dependentes:{RESET}{AMARELO}]" + "═" *134  + f"╗"+"\033[0m")
+                    print(f"{a}    {f'{'CPF':<15}{a}{'Nome':<30}{a}{'Sexo':<10}{a}{'Idade':<10}{a}{'Data Nasc.':<13}{a}{'Plano':<15}{a}{'Data Venc.':<24}':<145}"+" "*22+f"{a}")
+                    
+                    print(f"{a}{AMARELO}" + "─" *149 + f"{RESET}{a}")
+                    for cpf_dep,dep in item["terceiros"].items():
+                        data_dep = str(dep["data_nascimento"])
+                        data_dep = f"{data_dep[6:8] + "-" + data_dep[4:6] + "-" + data_dep[0:4]}"
+                        _, idade_dep = validar_data_nascimento(data_dep)
+                        print(f"{a}    {f'{cpf_dep:<15}│{dep["nome"]:<30}│{dep["sexo"]:<10}│{idade_dep:<10}│{data_dep:<13}│{item["plano_saude"]["plano"]:<15}│{data_v:<24}':<145}{a}")
+                print(f"{AMARELO}╚" + "═" * 149 + f"╝{RESET}")
 
         input(
             "\n"
@@ -1255,57 +1191,24 @@ def lps():
             data = data_v
 
             if item["plano_saude"]["plano"] == "Prata":
-                print(
-                    AMARELO
-                    + f"\n╔═[{CIANO}Titular:{chave}{RESET}{AMARELO}]"
-                    + "═" * 127
-                    + f"╗{RESET}"
-                )
+                print(AMARELO + f"\n╔═[{CIANO}Titular:{RESET}{AMARELO}]" + "═" *138  + f"╗"+"\033[0m")
 
-                print(
-                    f"{a}    {f"{'Nome':<22}{a}{'Sexo':<7}{a}{'Idade':<7}{a}{'E-mail':<30}{a}{'Data Nasc.':<10}{a}{'Telefone':<13}{a}{'Plano':<12}{a}{'Valor':<10}{a}{'Data Venc.':<10}":<180}{a}"
-                )
+                print(f"{a}    {f'{"CPF":<15}{a}{'Nome':<22}{a}{'Sexo':<7}{a}{'Idade':<7}{a}{'E-mail':<30}{a}{'Data Nasc.':<10}{a}{'Telefone':<13}{a}{'Plano':<12}{a}{'Valor':<10}{a}{'Data Venc.':<10}':<145}{a}")
 
-                print(f"{a}{CIANO}" + "─" * 149 + f"{RESET}{a}")
+                print(f"{a}{AMARELO}" + "─" *149 + f"\033[0m{a}")
 
-                print(
-                    f"{a}    {f'{item["nome"]:<22}│{item["sexo"]:<7}│{idade:<7}│{item["email"]:<30}│{data_n:<10}│{item["telefone"]:<13}│{item["plano_saude"]["plano"]:<12}│{item["plano_saude"]["valor"]:<10}│{data:<10}':<145}{a}"
-                )
-
-                for cpf_dep, dep in item[
-                    "terceiros"
-                ].items():  # -=-=-==-=-=-=------------------------------------------------------------------------
-                    data_dep = str(dep["data_nascimento"])
-                    data_dep = (
-                        f"{data_dep[6:8] + "-" + data_dep[4:6] + "-" + data_dep[0:4]}"
-                    )
-                    _, idade_dep = validar_data_nascimento(data_dep)
-
-                    valor_dep = (
-                        400
-                        if dep["plano"] == "Diamante"
-                        else (
-                            300
-                            if dep["plano"] == "Ouro"
-                            else (
-                                200
-                                if dep["plano"] == "Prata"
-                                else (500 if dep["plano"] == "Esmeralda" else 0)
-                            )
-                        )
-                    )
-
-                    print(f"{a}{AMARELO}" + "═" * 149 + f"{RESET}{a}")
-                    print(
-                        f"{a}    {f"{'CPF':<15}{a}{'Nome':<22}{a}{'Sexo':<7}{a}{'Idade':<7}{a}{'E-mail':<30}{a}{'Data Nasc.':<10}{a}{'Telefone':<13}{a}{'Plano':<12}{a}{'Valor':<10}{a}{'Data Venc.':<10}":150}{a}"
-                    )
-
-                    print(f"{a}{CIANO}" + "─" * 149 + f"{RESET}{a}")
-
-                    print(
-                        f"{a}    {f'{cpf_dep:<15}│{dep["nome"]:<22}│{dep["sexo"]:<7}│{idade_dep:<7}│{"N/A":<30}│{data_dep:<10}│{"N/A":<13}│{dep["plano"]:<12}│{valor_dep:<10}│{data:<10}':145}{a}"
-                    )
-                    print(f"{a}{AMARELO}╚" + "═" * 149 + f"╝{RESET}{a}")
+                print(f"{a}    {f'{chave:<15}{a}{item["nome"]:<22}│{item["sexo"]:<7}│{idade:<7}│{item["email"]:<30}│{data_n:<10}│{item["telefone"]:<13}│{item["plano_saude"]["plano"]:<12}│{item["plano_saude"]["valor"]:<10}│{data:<10}':<145}{a}")
+                if len(item["terceiros"])>0:
+                    print(AMARELO+f"╔═[{CIANO}Dependentes:{RESET}{AMARELO}]" + "═" *134  + f"╗"+"\033[0m")
+                    print(f"{a}    {f'{'CPF':<15}{a}{'Nome':<30}{a}{'Sexo':<10}{a}{'Idade':<10}{a}{'Data Nasc.':<13}{a}{'Plano':<15}{a}{'Data Venc.':<24}':<145}"+" "*22+f"{a}")
+                    
+                    print(f"{a}{AMARELO}" + "─" *149 + f"{RESET}{a}")
+                    for cpf_dep,dep in item["terceiros"].items():
+                        data_dep = str(dep["data_nascimento"])
+                        data_dep = f"{data_dep[6:8] + "-" + data_dep[4:6] + "-" + data_dep[0:4]}"
+                        _, idade_dep = validar_data_nascimento(data_dep)
+                        print(f"{a}    {f'{cpf_dep:<15}│{dep["nome"]:<30}│{dep["sexo"]:<10}│{idade_dep:<10}│{data_dep:<13}│{item["plano_saude"]["plano"]:<15}│{data_v:<24}':<145}{a}")
+                print(f"{AMARELO}╚" + "═" * 149 + f"╝{RESET}")
 
         input("\n\033[38;2;143;0;255mPressione enter para continuar...\033[0m")
 
@@ -1329,8 +1232,6 @@ def lps():
             )
             return
 
-        print("\033[30;47m" + "-" * 145 + "\033[0m")
-
         for chave, item in dados.items():
             data_n = str(item["data_nascimento"])
             data_n = data_n[6:8] + "-" + data_n[4:6] + "-" + data_n[0:4]
@@ -1341,57 +1242,24 @@ def lps():
             data = data_v
 
             if item["plano_saude"]["plano"] == "Esmeralda":
-                print(
-                    AMARELO
-                    + f"\n╔═[{CIANO}Titular:{chave}{RESET}{AMARELO}]"
-                    + "═" * 127
-                    + f"╗{RESET}"
-                )
+                print(AMARELO + f"\n╔═[{CIANO}Titular:{RESET}{AMARELO}]" + "═" *138  + f"╗"+"\033[0m")
 
-                print(
-                    f"{a}    {f"{'Nome':<22}{a}{'Sexo':<7}{a}{'Idade':<7}{a}{'E-mail':<30}{a}{'Data Nasc.':<10}{a}{'Telefone':<13}{a}{'Plano':<12}{a}{'Valor':<10}{a}{'Data Venc.':<10}":<180}{a}"
-                )
+                print(f"{a}    {f'{"CPF":<15}{a}{'Nome':<22}{a}{'Sexo':<7}{a}{'Idade':<7}{a}{'E-mail':<30}{a}{'Data Nasc.':<10}{a}{'Telefone':<13}{a}{'Plano':<12}{a}{'Valor':<10}{a}{'Data Venc.':<10}':<145}{a}")
 
-                print(f"{a}{CIANO}" + "─" * 149 + f"{RESET}{a}")
+                print(f"{a}{AMARELO}" + "─" *149 + f"\033[0m{a}")
 
-                print(
-                    f"{a}    {f'{item["nome"]:<22}│{item["sexo"]:<7}│{idade:<7}│{item["email"]:<30}│{data_n:<10}│{item["telefone"]:<13}│{item["plano_saude"]["plano"]:<12}│{item["plano_saude"]["valor"]:<10}│{data:<10}':<145}{a}"
-                )
-
-                for cpf_dep, dep in item[
-                    "terceiros"
-                ].items():  # -=-=-==-=-=-=------------------------------------------------------------------------
-                    data_dep = str(dep["data_nascimento"])
-                    data_dep = (
-                        f"{data_dep[6:8] + "-" + data_dep[4:6] + "-" + data_dep[0:4]}"
-                    )
-                    _, idade_dep = validar_data_nascimento(data_dep)
-
-                    valor_dep = (
-                        400
-                        if dep["plano"] == "Diamante"
-                        else (
-                            300
-                            if dep["plano"] == "Ouro"
-                            else (
-                                200
-                                if dep["plano"] == "Prata"
-                                else (500 if dep["plano"] == "Esmeralda" else 0)
-                            )
-                        )
-                    )
-
-                    print(f"{a}{AMARELO}" + "═" * 149 + f"{RESET}{a}")
-                    print(
-                        f"{a}    {f"{'CPF':<15}{a}{'Nome':<22}{a}{'Sexo':<7}{a}{'Idade':<7}{a}{'E-mail':<30}{a}{'Data Nasc.':<10}{a}{'Telefone':<13}{a}{'Plano':<12}{a}{'Valor':<10}{a}{'Data Venc.':<10}":150}{a}"
-                    )
-
-                    print(f"{a}{CIANO}" + "─" * 149 + f"{RESET}{a}")
-
-                    print(
-                        f"{a}    {f'{cpf_dep:<15}│{dep["nome"]:<22}│{dep["sexo"]:<7}│{idade_dep:<7}│{"N/A":<30}│{data_dep:<10}│{"N/A":<13}│{dep["plano"]:<12}│{valor_dep:<10}│{data:<10}':145}{a}"
-                    )
-                    print(f"{AMARELO}╚" + "═" * 149 + f"╝{RESET}")
+                print(f"{a}    {f'{chave:<15}{a}{item["nome"]:<22}│{item["sexo"]:<7}│{idade:<7}│{item["email"]:<30}│{data_n:<10}│{item["telefone"]:<13}│{item["plano_saude"]["plano"]:<12}│{item["plano_saude"]["valor"]:<10}│{data:<10}':<145}{a}")
+                if len(item["terceiros"])>0:
+                    print(AMARELO+f"╔═[{CIANO}Dependentes:{RESET}{AMARELO}]" + "═" *134  + f"╗"+"\033[0m")
+                    print(f"{a}    {f'{'CPF':<15}{a}{'Nome':<30}{a}{'Sexo':<10}{a}{'Idade':<10}{a}{'Data Nasc.':<13}{a}{'Plano':<15}{a}{'Data Venc.':<24}':<145}"+" "*22+f"{a}")
+                    
+                    print(f"{a}{AMARELO}" + "─" *149 + f"{RESET}{a}")
+                    for cpf_dep,dep in item["terceiros"].items():
+                        data_dep = str(dep["data_nascimento"])
+                        data_dep = f"{data_dep[6:8] + "-" + data_dep[4:6] + "-" + data_dep[0:4]}"
+                        _, idade_dep = validar_data_nascimento(data_dep)
+                        print(f"{a}    {f'{cpf_dep:<15}│{dep["nome"]:<30}│{dep["sexo"]:<10}│{idade_dep:<10}│{data_dep:<13}│{item["plano_saude"]["plano"]:<15}│{data_v:<24}':<145}{a}")
+                print(f"{AMARELO}╚" + "═" * 149 + f"╝{RESET}")
 
         input("\n\033[38;2;143;0;255mPressione enter para continuar...\033[0m")
 
@@ -1415,56 +1283,24 @@ def listagem_geral():
         data_n = f"{data_n[6:8] + "-" + data_n[4:6] + "-" + data_n[0:4]}"
         _, idade = validar_data_nascimento(data_n)
         data = data_v[6:8] + "-" + data_v[4:6] + "-" + data_v[0:4]
+        print(AMARELO + f"\n╔═[{CIANO}Titular:{RESET}{AMARELO}]" + "═" *138  + f"╗"+"\033[0m")
 
-        print(
-            AMARELO
-            + f"\n╔═[{CIANO}Titular:{chave}{RESET}{AMARELO}]"
-            + "═" * 127
-            + f"╗{RESET}"
-        )
+        print(f"{a}    {f'{"CPF":<15}{a}{'Nome':<22}{a}{'Sexo':<7}{a}{'Idade':<7}{a}{'E-mail':<30}{a}{'Data Nasc.':<10}{a}{'Telefone':<13}{a}{'Plano':<12}{a}{'Valor':<10}{a}{'Data Venc.':<10}':<145}{a}")
 
-        print(
-            f"{a}    {f"{'Nome':<22}{a}{'Sexo':<7}{a}{'Idade':<7}{a}{'E-mail':<30}{a}{'Data Nasc.':<10}{a}{'Telefone':<13}{a}{'Plano':<12}{a}{'Valor':<10}{a}{'Data Venc.':<10}":<180}{a}"
-        )
+        print(f"{a}{AMARELO}" + "─" *149 + f"\033[0m{a}")
 
-        print(f"{a}{CIANO}" + "─" * 149 + f"{RESET}{a}")
-
-        print(
-            f"{a}    {f'{item["nome"]:<22}│{item["sexo"]:<7}│{idade:<7}│{item["email"]:<30}│{data_n:<10}│{item["telefone"]:<13}│{item["plano_saude"]["plano"]:<12}│{item["plano_saude"]["valor"]:<10}│{data:<10}':<145}{a}"
-        )
-
-        for cpf_dep, dep in item[
-            "terceiros"
-        ].items():  # -=-=-==-=-=-=------------------------------------------------------------------------
-            data_dep = str(dep["data_nascimento"])
-            data_dep = f"{data_dep[6:8] + "-" + data_dep[4:6] + "-" + data_dep[0:4]}"
-            _, idade_dep = validar_data_nascimento(data_dep)
-
-            valor_dep = (
-                400
-                if dep["plano"] == "Diamante"
-                else (
-                    300
-                    if dep["plano"] == "Ouro"
-                    else (
-                        200
-                        if dep["plano"] == "Prata"
-                        else (500 if dep["plano"] == "Esmeralda" else 0)
-                    )
-                )
-            )
-
-            print(f"{a}{AMARELO}" + "═" * 149 + f"{RESET}{a}")
-            print(
-                f"{a}    {f"{'CPF':<15}{a}{'Nome':<22}{a}{'Sexo':<7}{a}{'Idade':<7}{a}{'E-mail':<30}{a}{'Data Nasc.':<10}{a}{'Telefone':<13}{a}{'Plano':<12}{a}{'Valor':<10}{a}{'Data Venc.':<10}":150}{a}"
-            )
-
-            print(f"{a}{CIANO}" + "─" * 149 + f"{RESET}{a}")
-
-            print(
-                f"{a}    {f'{cpf_dep:<15}│{dep["nome"]:<22}│{dep["sexo"]:<7}│{idade_dep:<7}│{"N/A":<30}│{data_dep:<10}│{"N/A":<13}│{dep["plano"]:<12}│{valor_dep:<10}│{data:<10}':145}{a}"
-            )
-            print(f"{AMARELO}╚" + "═" * 149 + f"╝{RESET}")
+        print(f"{a}    {f'{chave:<15}{a}{item["nome"]:<22}│{item["sexo"]:<7}│{idade:<7}│{item["email"]:<30}│{data_n:<10}│{item["telefone"]:<13}│{item["plano_saude"]["plano"]:<12}│{item["plano_saude"]["valor"]:<10}│{data:<10}':<145}{a}")
+        if len(item["terceiros"])>0:
+            print(AMARELO+f"╔═[{CIANO}Dependentes:{RESET}{AMARELO}]" + "═" *134  + f"╗"+"\033[0m")
+            print(f"{a}    {f'{'CPF':<15}{a}{'Nome':<30}{a}{'Sexo':<10}{a}{'Idade':<10}{a}{'Data Nasc.':<13}{a}{'Plano':<15}{a}{'Data Venc.':<24}':<145}"+" "*22+f"{a}")
+            
+            print(f"{a}{AMARELO}" + "─" *149 + f"{RESET}{a}")
+            for cpf_dep,dep in item["terceiros"].items():
+                data_dep = str(dep["data_nascimento"])
+                data_dep = f"{data_dep[6:8] + "-" + data_dep[4:6] + "-" + data_dep[0:4]}"
+                _, idade_dep = validar_data_nascimento(data_dep)
+                print(f"{a}    {f'{cpf_dep:<15}│{dep["nome"]:<30}│{dep["sexo"]:<10}│{idade_dep:<10}│{data_dep:<13}│{item["plano_saude"]["plano"]:<15}│{data_v:<24}':<145}{a}")
+        print(f"{AMARELO}╚" + "═" * 149 + f"╝{RESET}")
 
     input("\n\033[38;2;143;0;255mPressione enter para continuar...\033[0m")
 
@@ -1494,54 +1330,24 @@ def data_por_vecimento():
         data_n = f"{data_n[6:8] + "-" + data_n[4:6] + "-" + data_n[0:4]}"
         _, idade = validar_data_nascimento(data_n)
         data = data_v[6:8] + "-" + data_v[4:6] + "-" + data_v[0:4]
+        print(AMARELO + f"\n╔═[{CIANO}Titular:{RESET}{AMARELO}]" + "═" *138  + f"╗"+"\033[0m")
 
-        print(
-            AMARELO
-            + f"\n╔═[{CIANO}Titular:{chave}{RESET}{AMARELO}]"
-            + "═" * 127
-            + f"╗{RESET}"
-        )
+        print(f"{a}    {f'{"CPF":<15}{a}{'Nome':<22}{a}{'Sexo':<7}{a}{'Idade':<7}{a}{'E-mail':<30}{a}{'Data Nasc.':<10}{a}{'Telefone':<13}{a}{'Plano':<12}{a}{'Valor':<10}{a}{'Data Venc.':<10}':<145}{a}")
 
-        print(
-            f"{a}    {f"{'Nome':<22}{a}{'Sexo':<7}{a}{'Idade':<7}{a}{'E-mail':<30}{a}{'Data Nasc.':<10}{a}{'Telefone':<13}{a}{'Plano':<12}{a}{'Valor':<10}{a}{'Data Venc.':<10}":<180}{a}"
-        )
+        print(f"{a}{AMARELO}" + "─" *149 + f"\033[0m{a}")
 
-        print(f"{a}{CIANO}" + "─" * 149 + f"{RESET}{a}")
-
-        print(
-            f"{a}    {f'{item["nome"]:<22}│{item["sexo"]:<7}│{idade:<7}│{item["email"]:<30}│{data_n:<10}│{item["telefone"]:<13}│{item["plano_saude"]["plano"]:<12}│{item["plano_saude"]["valor"]:<10}│{data:<10}':<145}{a}"
-        )
-
-        for cpf_dep, dep in item["terceiros"].items():
-            data_dep = str(dep["data_nascimento"])
-            data_dep = f"{data_dep[6:8] + "-" + data_dep[4:6] + "-" + data_dep[0:4]}"
-            _, idade_dep = validar_data_nascimento(data_dep)
-
-            valor_dep = (
-                400
-                if dep["plano"] == "Diamante"
-                else (
-                    300
-                    if dep["plano"] == "Ouro"
-                    else (
-                        200
-                        if dep["plano"] == "Prata"
-                        else (500 if dep["plano"] == "Esmeralda" else 0)
-                    )
-                )
-            )
-
-            print(f"{a}{AMARELO}" + "═" * 149 + f"{RESET}{a}")
-            print(
-                f"{a}    {f"{'CPF':<15}{a}{'Nome':<22}{a}{'Sexo':<7}{a}{'Idade':<7}{a}{'E-mail':<30}{a}{'Data Nasc.':<10}{a}{'Telefone':<13}{a}{'Plano':<12}{a}{'Valor':<10}{a}{'Data Venc.':<10}":150}{a}"
-            )
-
-            print(f"{a}{CIANO}" + "─" * 149 + f"{RESET}{a}")
-
-            print(
-                f"{a}    {f'{cpf_dep:<15}│{dep["nome"]:<22}│{dep["sexo"]:<7}│{idade_dep:<7}│{"N/A":<30}│{data_dep:<10}│{"N/A":<13}│{dep["plano"]:<12}│{valor_dep:<10}│{data:<10}':145}{a}"
-            )
-            print(f"{AMARELO}╚" + "═" * 149 + f"╝{RESET}")
+        print(f"{a}    {f'{chave:<15}{a}{item["nome"]:<22}│{item["sexo"]:<7}│{idade:<7}│{item["email"]:<30}│{data_n:<10}│{item["telefone"]:<13}│{item["plano_saude"]["plano"]:<12}│{item["plano_saude"]["valor"]:<10}│{data:<10}':<145}{a}")
+        if len(item["terceiros"])>0:
+            print(AMARELO+f"╔═[{CIANO}Dependentes:{RESET}{AMARELO}]" + "═" *134  + f"╗"+"\033[0m")
+            print(f"{a}    {f'{'CPF':<15}{a}{'Nome':<30}{a}{'Sexo':<10}{a}{'Idade':<10}{a}{'Data Nasc.':<13}{a}{'Plano':<15}{a}{'Data Venc.':<24}':<145}"+" "*22+f"{a}")
+            
+            print(f"{a}{AMARELO}" + "─" *149 + f"{RESET}{a}")
+            for cpf_dep,dep in item["terceiros"].items():
+                data_dep = str(dep["data_nascimento"])
+                data_dep = f"{data_dep[6:8] + "-" + data_dep[4:6] + "-" + data_dep[0:4]}"
+                _, idade_dep = validar_data_nascimento(data_dep)
+                print(f"{a}    {f'{cpf_dep:<15}│{dep["nome"]:<30}│{dep["sexo"]:<10}│{idade_dep:<10}│{data_dep:<13}│{item["plano_saude"]["plano"]:<15}│{data_v:<24}':<145}{a}")
+        print(f"{AMARELO}╚" + "═" * 149 + f"╝{RESET}")
 
     input("\n\033[38;2;143;0;255mPressione enter para continuar...\033[0m")
 
@@ -1572,47 +1378,23 @@ def cpf():
 
         if chave == cpf:
             data = data_v[6:8] + "-" + data_v[4:6] + "-" + data_v[0:4]
-            print(
-                AMARELO
-                + f"\n╔═[{CIANO}Titular:{RESET}{AMARELO}]"
-                + "═" * 138
-                + f"╗"
-                + "\033[0m"
-            )
+            print(AMARELO + f"\n╔═[{CIANO}Titular:{RESET}{AMARELO}]" + "═" *138  + f"╗"+"\033[0m")
 
-            print(
-                f"{a}    {f'{"CPF":<15}{a}{'Nome':<22}{a}{'Sexo':<7}{a}{'Idade':<7}{a}{'E-mail':<30}{a}{'Data Nasc.':<10}{a}{'Telefone':<13}{a}{'Plano':<12}{a}{'Valor':<10}{a}{'Data Venc.':<10}':<145}{a}"
-            )
+            print(f"{a}    {f'{"CPF":<15}{a}{'Nome':<22}{a}{'Sexo':<7}{a}{'Idade':<7}{a}{'E-mail':<30}{a}{'Data Nasc.':<10}{a}{'Telefone':<13}{a}{'Plano':<12}{a}{'Valor':<10}{a}{'Data Venc.':<10}':<145}{a}")
 
-            print(f"{a}{AMARELO}" + "─" * 149 + f"\033[0m{a}")
+            print(f"{a}{AMARELO}" + "─" *149 + f"\033[0m{a}")
 
-            print(
-                f"{a}    {f'{chave:<15}{a}{item["nome"]:<22}│{item["sexo"]:<7}│{idade:<7}│{item["email"]:<30}│{data_n:<10}│{item["telefone"]:<13}│{item["plano_saude"]["plano"]:<12}│{item["plano_saude"]["valor"]:<10}│{data:<10}':<145}{a}"
-            )
-            if len(item["terceiros"]) > 0:
-                print(
-                    AMARELO
-                    + f"╔═[{CIANO}Dependentes:{RESET}{AMARELO}]"
-                    + "═" * 134
-                    + f"╗"
-                    + "\033[0m"
-                )
-                print(
-                    f"{a}    {f'{'CPF':<15}{a}{'Nome':<30}{a}{'Sexo':<10}{a}{'Idade':<10}{a}{'Data Nasc.':<13}{a}{'Plano':<15}{a}{'Valor':<13}{a}{'Data Venc.':<10}':<145}"
-                    + " " * 22
-                    + f"{a}"
-                )
-
-                print(f"{a}{AMARELO}" + "─" * 149 + f"{RESET}{a}")
-                for cpf_dep, dep in item["terceiros"].items():
+            print(f"{a}    {f'{chave:<15}{a}{item["nome"]:<22}│{item["sexo"]:<7}│{idade:<7}│{item["email"]:<30}│{data_n:<10}│{item["telefone"]:<13}│{item["plano_saude"]["plano"]:<12}│{item["plano_saude"]["valor"]:<10}│{data:<10}':<145}{a}")
+            if len(item["terceiros"])>0:
+                print(AMARELO+f"╔═[{CIANO}Dependentes:{RESET}{AMARELO}]" + "═" *134  + f"╗"+"\033[0m")
+                print(f"{a}    {f'{'CPF':<15}{a}{'Nome':<30}{a}{'Sexo':<10}{a}{'Idade':<10}{a}{'Data Nasc.':<13}{a}{'Plano':<15}{a}{'Data Venc.':<24}':<145}"+" "*22+f"{a}")
+                
+                print(f"{a}{AMARELO}" + "─" *149 + f"{RESET}{a}")
+                for cpf_dep,dep in item["terceiros"].items():
                     data_dep = str(dep["data_nascimento"])
-                    data_dep = (
-                        f"{data_dep[6:8] + "-" + data_dep[4:6] + "-" + data_dep[0:4]}"
-                    )
+                    data_dep = f"{data_dep[6:8] + "-" + data_dep[4:6] + "-" + data_dep[0:4]}"
                     _, idade_dep = validar_data_nascimento(data_dep)
-                    print(
-                        f"{a}    {f'{cpf_dep:<15}│{dep["nome"]:<30}│{dep["sexo"]:<10}│{idade_dep:<10}│{data_dep:<13}│{item["plano_saude"]["plano"]:<15}│{item["plano_saude"]["valor"]:<13}│{data_v:<10}':<145}{a}"
-                    )
+                    print(f"{a}    {f'{cpf_dep:<15}│{dep["nome"]:<30}│{dep["sexo"]:<10}│{idade_dep:<10}│{data_dep:<13}│{item["plano_saude"]["plano"]:<15}│{data_v:<24}':<145}{a}")
             print(f"{AMARELO}╚" + "═" * 149 + f"╝{RESET}")
 
     input("\n\033[38;2;143;0;255mPressione enter para continuar...\033[0m")
