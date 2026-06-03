@@ -1,13 +1,15 @@
 from calendar import monthrange
 from datetime import datetime
-from os import name, system
+from platform import system
+from subprocess import run
 
 
 def limpar_tela():
-    if name == "nt":
-        system("cls")
+    if system == "Windows":
+        run("cls")
     else:
-        system("clear")
+        run("clear")
+
 
 def validar_cpf(cpf):
     if len(cpf) == 14 and cpf[3] == "." and cpf[7] == "." and cpf[11] == "-":

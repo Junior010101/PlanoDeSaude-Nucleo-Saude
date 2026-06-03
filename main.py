@@ -1,3 +1,4 @@
+from logica import limpar_tela
 from menus import (
     cadastrar_cliente,
     cpf,
@@ -7,9 +8,8 @@ from menus import (
     lps,
     remover,
 )
-from logica import limpar_tela
 
-123
+
 def menu():
     AMARELO = "\033[33m"
     MAGENTA = "\033[35m"
