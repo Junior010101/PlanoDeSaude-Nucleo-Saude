@@ -1086,7 +1086,7 @@ def lps():
         if count == 0:
             print(
                 "\033[38;2;255;0;0m"
-                + "Não tem nenhum cliente com esse plano meu manito!!!"
+                + "Vitor, tem plano nenhum aqui não!!!"
                 + "\033[0m"
             )
             input(
@@ -1159,7 +1159,7 @@ def lps():
         if count == 0:
             print(
                 "\033[38;2;255;0;0m"
-                + "Não tem nenhum cliente com esse plano meu manito!!!"
+                + "Vitor, tem plano nenhum aqui não!!!"
                 + "\033[0m"
             )
             input(
@@ -1237,7 +1237,7 @@ def lps():
         if count == 0:
             print(
                 "\033[38;2;255;0;0m"
-                + "Não tem nenhum cliente com esse plano meu manito!!!"
+                + "Vitor, tem plano nenhum aqui não!!!"
                 + "\033[0m"
             )
             input(
@@ -1310,7 +1310,7 @@ def lps():
         if count == 0:
             print(
                 "\033[38;2;255;0;0m"
-                + "Não tem nenhum cliente com esse plano meu manito!!!"
+                + "Vitor, tem plano nenhum aqui não!!!"
                 + "\033[0m"
             )
             input(
@@ -1382,7 +1382,7 @@ def listagem_geral():
     dados = ler_arquivo()
 
     if not dados:
-        print("\033[38;2;255;0;0mNão tem nada aqui não!!!\033[0m")
+        print("\033[38;2;255;0;0mVitor, faz o cadastro de algum titular primeiro.\033[0m")
         input("\n\033[38;2;143;0;255mPressione enter para continuar...\033[0m")
         return
 
@@ -1447,7 +1447,7 @@ def data_por_vecimento():
     dados = ler_arquivo()
 
     if not dados:
-        print("\033[38;2;255;0;0mNão tem nada aqui não!!!\033[0m")
+        print("\033[38;2;255;0;0mVitor, faz o cadastro de algum titular primeiro.\033[0m")
         input("\n\033[38;2;143;0;255mPressione enter para continuar...\033[0m")
         return
 
@@ -1524,7 +1524,7 @@ def cpf():
         input("\n\033[38;2;143;0;255mPressione enter para continuar...\033[0m")
         return
     if cpf not in dados:
-        print("Vitor, coloque um cpf valido prfv.")
+        print("\033[38;2;255;0;0mVitor, coloque um cpf valido prfv.\033[0m")
         input("\n\033[38;2;143;0;255mPressione enter para continuar...\033[0m")
         return
 

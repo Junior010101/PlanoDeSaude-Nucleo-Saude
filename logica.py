@@ -15,12 +15,12 @@ def validar_cpf(cpf):
         nums = cpf.replace(".", "").replace("-", "")
 
         if not nums.isdigit() or len(nums) != 11:
-            return None, f"O cpf {cpf} possui caracteres inválidos."
+            return None, f"\033[38;2;255;0;0mO cpf {cpf} possui caracteres inválidos.\033[0m"
 
         return str(nums), None
 
     else:
-        return None, f"O formato do cpf: {cpf}, é invalido."
+        return None, f"\033[38;2;255;0;0mO formato do cpf: {cpf}, é invalido.\033[0m"
 
 
 def validar_data_nascimento(data_nascimento):
@@ -29,19 +29,19 @@ def validar_data_nascimento(data_nascimento):
         or data_nascimento[2] != "-"
         or data_nascimento[5] != "-"
     ):
-        return None, "Formato da data de nascimento inválido. Use DD-MM-AAAA."
+        return None, f"\033[38;2;255;0;0mFormato da data de nascimento inválido. Use DD-MM-AAAA.\033[0m"
 
     dia_str, mes_str, ano_str = data_nascimento.split("-")
 
     if not (dia_str.isdigit() and mes_str.isdigit() and ano_str.isdigit()):
-        return None, "A data de nascimento contém caracteres inválidos."
+        return None, f"\033[38;2;255;0;0mA data de nascimento contém caracteres inválidos.\033[0m"
 
     dia = int(dia_str)
     mes = int(mes_str)
     ano = int(ano_str)
 
     if not (1 <= mes <= 12):
-        return None, f"A data {data_nascimento} é inválida (mês inexistente)."
+        return None, f"\033[38;2;255;0;0mA data {data_nascimento} é inválida (mês inexistente).\033[0m"
 
     data_hoje = datetime.now()
     dia_atual = data_hoje.day
@@ -51,13 +51,13 @@ def validar_data_nascimento(data_nascimento):
     if not (ano <= ano_atual):
         return (
             None,
-            f"A data {data_nascimento} é inválida "
-            + f"(o ano deve ser menor ou igual ao atual: {ano_atual}).",
+            f"\033[38;2;255;0;0mA data {data_nascimento} é inválida "
+            + f"(o ano deve ser menor ou igual ao atual: {ano_atual}).\033[0m",
         )
 
     _, dias_no_mes = monthrange(ano, mes)
     if not (1 <= dia <= dias_no_mes):
-        return None, f"A data {data_nascimento} é inválida (dia inexistente)."
+        return None, f"\033[38;2;255;0;0mA data {data_nascimento} é inválida (dia inexistente).\033[0m"
 
     idade = ano_atual - ano
 
@@ -67,8 +67,8 @@ def validar_data_nascimento(data_nascimento):
     if ano < 1900:
         return (
             None,
-            f"A data {data_nascimento} é inválida. "
-            + "Imortais não precisam de plano de saúde.",
+            f"\033[38;2;255;0;0mA data {data_nascimento} é inválida."
+            + "Imortais não precisam de plano de saúde.\033[0m",
         )
 
     dia_mes_ano = data_nascimento.split("-")
