@@ -56,6 +56,7 @@ def cadastrar_cliente():
                     + "Pressione enter para continuar..."
                     + "\033[0m"
                 )
+                del clientes[cpf]
                 return
 
             if cpf in clientes:
@@ -65,6 +66,7 @@ def cadastrar_cliente():
                     + "Pressione enter para continuar..."
                     + "\033[0m"
                 )
+                del clientes[cpf]
                 return
 
             for cliente in clientes.values():
@@ -81,6 +83,7 @@ def cadastrar_cliente():
                             + "Pressione enter para continuar..."
                             + "\033[0m"
                         )
+                        del clientes[cpf]
                         return
 
             clientes[cpf] = {
@@ -98,6 +101,7 @@ def cadastrar_cliente():
                     + "Pressione enter para continuar..."
                     + "\033[0m"
                 )
+                del clientes[cpf]
                 return
             elif not nome.replace(" ", "").isalpha():
                 print(
@@ -109,6 +113,7 @@ def cadastrar_cliente():
                     + "Pressione enter para continuar..."
                     + "\033[0m"
                 )
+                del clientes[cpf]
                 return
             clientes[cpf]["nome"] = nome
 
@@ -124,6 +129,7 @@ def cadastrar_cliente():
                     + "Pressione enter para continuar..."
                     + "\033[0m"
                 )
+                del clientes[cpf]
                 return
 
             sexos = {"1": "fem", "2": "masc"}
@@ -143,6 +149,7 @@ def cadastrar_cliente():
                     + "Pressione enter para continuar..."
                     + "\033[0m"
                 )
+                del clientes[cpf]
                 return
 
             if info < 18:
@@ -155,6 +162,7 @@ def cadastrar_cliente():
                     + "Pressione enter para continuar..."
                     + "\033[0m"
                 )
+                del clientes[cpf]
                 return
 
             clientes[cpf]["data_nascimento"] = data_nascimento
@@ -189,6 +197,7 @@ def cadastrar_cliente():
                     + "Pressione enter para continuar..."
                     + "\033[0m"
                 )
+                del clientes[cpf]
                 return
 
             opcao = opcoes[opcao]
@@ -205,6 +214,7 @@ def cadastrar_cliente():
                     + "Pressione enter para continuar..."
                     + "\033[0m"
                 )
+                del clientes[cpf]
                 return
 
             if escolha.upper() in ["S", "SIM"]:
@@ -262,6 +272,7 @@ def cadastrar_cliente():
                             + "Pressione enter para continuar..."
                             + "\033[0m"
                         )
+                        del clientes[cpf]["terceiros"][cpf_dep]
                         continue
 
                     sexos = {"1": "fem", "2": "masc"}
@@ -278,6 +289,7 @@ def cadastrar_cliente():
 
                     if data_nascimento_dep is None:
                         print("\n\033[38;2;255;0;0m" + info + "\033[0m")
+                        del clientes[cpf]["terceiros"][cpf_dep]
                         continue
 
                     clientes[cpf]["terceiros"][cpf_dep]["nome"] = nome_dep
@@ -311,6 +323,7 @@ def cadastrar_cliente():
                             + "Opção de plano invalida."
                             + "\033[0m",
                         )
+                        del clientes[cpf]["terceiros"][cpf_dep]
                         continue
 
                     opcao = opcoes[opcao]
